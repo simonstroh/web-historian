@@ -4,9 +4,44 @@
   <link rel="stylesheet" type="text/css" href="styles.css" />
 </head>
 <body>
-  <form method="POST">
-    <input type="input" name="url"></input>
+  <p id="welcome">Simon and Daryl are currently archiving the site you requested. Please check back soon for a freshly embalmed copy!</p>
+  <span id="title">URL:</span>
+  <form id="field" method="POST">
+    <input id="text" type="input" name="url"></input>
   </form>
-  Our robots are currently archiving the site you requested. Please check back soon for a freshly embalmed copy!
+  <script>
+    $('form').on('submit', function(event) {
+      event.preventDefault()
+      var text = $(this).serialize()
+      var url = text.slice(text.indexOf('=') + 1)
+      // $.get(url, function(data) {
+      //   $('body').html(data)
+      // })
+      $.ajax({
+        type: 'GET',
+        url: url,
+        success: function(data) {
+          $('body').html(data)
+        },
+        error: function() {
+          $.get('/loading.html', function(data) {
+            $('body').html(data)
+          })
+        }
+      })
+      $.ajax({
+        type: 'POST',
+        url: 'http://127.0.0.1:8080/archives/urls',
+        contentType: 'text/plain',
+        data: JSON.stringify(url),
+        success: function(data) {
+          console.log("SUCCESS!")
+        },
+        error: function(data) {
+          console.log("ERROR!")
+        }
+      })
+    })
+  </script>
 </body>
 </html>

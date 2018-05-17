@@ -1,1 +1,1 @@
-["www.facebook.com","www.google.com","www.facebookgoogle.com"]
+["www.wired.com","www.myspace.com","www.crazymonkeygames.com","www.twitter.com","www.wikipedia.com"]

@@ -22,8 +22,9 @@ var post = function(req) {
 
 exports.read = function(url, res) {
   var dirs = url.split('/')
-  dirs.shift()
+  if (dirs[0] === '.') dirs.shift()
   var pathname = path.join(__dirname, ...dirs)
+  console.log(pathname)
   fs.readFile(pathname, function(err, data) {
     if (err) console.log(err)
     res.writeHead(200)
@@ -43,6 +44,9 @@ exports.external = {
   },
   '/archives/urls': function(res) {
     head(res, 200, JSON.stringify(exports.list))
+  },
+  '/loading.html': function(res) {
+    exports.read('./public/loading.html', res)
   }
 }
 
