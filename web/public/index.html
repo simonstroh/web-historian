@@ -2,11 +2,32 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="styles.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-  Enter a URL here:
+  <p>Welcome to the web capsule, where should we begin?</p>
+  <span>URL:</span>
   <form method="POST">
     <input type="input" name="url"></input>
   </form>
+  <script>
+    $('form').on('submit', function(event) {
+      event.preventDefault()
+      var text = $(this).serialize()
+      var url = text.slice(text.indexOf('=') + 1)
+      $.ajax({
+        type: 'POST',
+        url: 'http://127.0.0.1:8080/archives/urls',
+        contentType: 'text/plain',
+        data: JSON.stringify(url),
+        success: function(data) {
+          console.log("SUCCESS!")
+        },
+        error: function(data) {
+          console.log("ERROR!")
+        }
+      })
+    })
+  </script>
 </body>
 </html>
